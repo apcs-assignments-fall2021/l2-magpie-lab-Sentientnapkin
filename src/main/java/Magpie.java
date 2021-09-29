@@ -1,3 +1,5 @@
+import java.util.Locale;
+
 /**
  * A program to carry on conversations with a human user.
  * This is the initial version that:  
@@ -31,16 +33,43 @@ public class Magpie
     public String getResponse(String statement)
     {
         String response = "";
-        if (statement.indexOf("no") >= 0)
+        if (findWord(statement,"no") >= 0)
         {
             response = "Why so negative?";
         }
-        else if (statement.indexOf("mother") >= 0
-                || statement.indexOf("father") >= 0
-                || statement.indexOf("sister") >= 0
-                || statement.indexOf("brother") >= 0)
+        else if (findWord(statement,"dog") >= 0
+                || findWord(statement,"cat") >= 0)
         {
-            response = "Tell me more about your family.";
+            response = "Tell me more about your pets.";
+        }
+        else if (findWord(statement,"Nathan") >= 0
+                || findWord(statement,"Lin") >= 0)
+        {
+            response = "He sounds cool!";
+        }
+        else if (findWord(statement,"Bruno") >= 0
+                || findWord(statement,"do Val Callao") >= 0)
+        {
+            response = "He is probably very muscular!";
+        }
+        else if (findWord(statement,"Mario") >= 0
+                || findWord(statement,"Chris Pratt") >= 0)
+        {
+            response = "Chris Pratt is Mario in the new movie.";
+        }
+        else if (findWord(statement,"shorts") >= 0
+                || findWord(statement,"short pants") >= 0)
+        {
+            response = "I hate shorts.";
+        }
+        else if (findWord(statement,"I want ") >= 0)
+        {
+            response = (transformIWantStatement(statement));
+        }
+
+        else if (statement.trim().length()<1)
+        {
+            response = "Could you write something next time?";
         }
         else
         {
@@ -55,7 +84,7 @@ public class Magpie
      */
     public String getRandomResponse()
     {
-        final int NUMBER_OF_RESPONSES = 4;
+        final int NUMBER_OF_RESPONSES = 6;
         double r = Math.random();
         int whichResponse = (int)(r * NUMBER_OF_RESPONSES);
         String response = "";
@@ -76,6 +105,14 @@ public class Magpie
         {
             response = "You don't say.";
         }
+        else if (whichResponse == 4)
+        {
+            response = "But is it really?";
+        }
+        else if (whichResponse == 5)
+        {
+            response = "I'm not sure.";
+        }
     
         return response;
     }
@@ -90,7 +127,9 @@ public class Magpie
     // The method returns the index of the first character in word
     // if it is found, and returns -1 otherwise. 
     public int findWord(String str, String word) {
-        return -1;
+        str = " "+str.toUpperCase()+" ";
+        word = " "+word.toUpperCase()+" ";
+        return str.indexOf(word);
     }
 
     
@@ -104,8 +143,7 @@ public class Magpie
      */
     public String transformIWantStatement(String statement)
     {
-        //your code here
-        return "";
+        return "Would you really be happy if you had"+statement.substring((findWord(statement,"I want ")+7))+"?";
     }
 
     /**
