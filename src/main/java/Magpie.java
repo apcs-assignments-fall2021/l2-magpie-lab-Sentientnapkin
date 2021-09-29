@@ -66,7 +66,18 @@ public class Magpie
         {
             response = (transformIWantStatement(statement));
         }
-
+        else if (findWord(statement,"I want to ") >= 0)
+        {
+            response = (transformIWantToStatement(statement));
+        }
+        else if (findWord(statement, "I")>=0&&findWord(statement, "you")>=0&&findWord(statement, "I")<=findWord(statement, "you"))
+        {
+            response = (transformIYouStatement(statement));
+        }
+        else if (findWord(statement, "you")>=0&&findWord(statement, "me")>=0&&findWord(statement, "you")<=findWord(statement, "me"))
+        {
+            response = (transformYouMeStatement(statement));
+        }
         else if (statement.trim().length()<1)
         {
             response = "Could you write something next time?";
@@ -127,6 +138,7 @@ public class Magpie
     // The method returns the index of the first character in word
     // if it is found, and returns -1 otherwise. 
     public int findWord(String str, String word) {
+        System.out.println(str);
         str = " "+str.toUpperCase()+" ";
         word = " "+word.toUpperCase()+" ";
         return str.indexOf(word);
@@ -154,8 +166,7 @@ public class Magpie
      */
     public String transformIYouStatement(String statement)
     {
-        //your code here
-        return "";
+        return "Why do you" +statement.substring(findWord(statement, "I ")+2, findWord(statement, "you")-1)+" me?";
     }
 
     /**
@@ -166,8 +177,7 @@ public class Magpie
      */
     public String transformIWantToStatement(String statement)
     {
-        // your code here
-        return "";
+        return "What would it mean to"+statement.substring((findWord(statement,"I want to ")+10))+"?";
     }
 
 
@@ -181,7 +191,7 @@ public class Magpie
      */
     public String transformYouMeStatement(String statement)
     {
-        // your code here
-        return "";
+        return "What makes you think that I" +statement.substring(findWord(statement, "you ")+4, findWord(statement, "me")-1)+" you?";
+
     }
 }
