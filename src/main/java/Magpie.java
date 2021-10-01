@@ -20,7 +20,7 @@ public class Magpie
      */
     public String getGreeting()
     {
-        return "Hello, let's talk.";
+        return "Me you converse like monkey.";
     }
     
     /**
@@ -62,21 +62,34 @@ public class Magpie
         {
             response = "I hate shorts.";
         }
+        else if (findWord(statement,"hate") >= 0)
+        {
+            response = "Woah woah woah, hold on there, hate is a strong word.";
+        }
         else if (findWord(statement,"I want ") >= 0)
         {
+            statement=statement.toLowerCase();
             response = (transformIWantStatement(statement));
         }
         else if (findWord(statement,"I want to ") >= 0)
         {
+            statement=statement.toLowerCase();
             response = (transformIWantToStatement(statement));
         }
         else if (findWord(statement, "I")>=0&&findWord(statement, "you")>=0&&findWord(statement, "I")<=findWord(statement, "you"))
         {
+            statement=statement.toLowerCase();
             response = (transformIYouStatement(statement));
         }
         else if (findWord(statement, "you")>=0&&findWord(statement, "me")>=0&&findWord(statement, "you")<=findWord(statement, "me"))
         {
+            statement=statement.toLowerCase();
             response = (transformYouMeStatement(statement));
+        }
+        else if (findWord(statement, "Would you rather")>=0&&findWord(statement, "or")>=0&&findWord(statement, "Would you rather")<=findWord(statement, "or"))
+        {
+            statement=statement.toLowerCase();
+            response = (transformWouldYouRather(statement));
         }
         else if (statement.trim().length()<1)
         {
@@ -155,7 +168,7 @@ public class Magpie
      */
     public String transformIWantStatement(String statement)
     {
-        return "Would you really be happy if you had"+statement.substring((findWord(statement,"I want ")+7))+"?";
+        return "Would you really be happy if you had"+statement.substring((findWord(statement,"i want ")+7))+"?";
     }
 
     /**
@@ -166,7 +179,7 @@ public class Magpie
      */
     public String transformIYouStatement(String statement)
     {
-        return "Why do you" +statement.substring(findWord(statement, "I ")+2, findWord(statement, "you")-1)+" me?";
+        return "Why do you " +statement.substring(findWord(statement, "i")+2, findWord(statement, "you")-1)+" me?";
     }
 
     /**
@@ -177,7 +190,7 @@ public class Magpie
      */
     public String transformIWantToStatement(String statement)
     {
-        return "What would it mean to"+statement.substring((findWord(statement,"I want to ")+10))+"?";
+        return "What would it mean to"+statement.substring((findWord(statement,"i want to ")+10))+"?";
     }
 
 
@@ -191,7 +204,16 @@ public class Magpie
      */
     public String transformYouMeStatement(String statement)
     {
-        return "What makes you think that I" +statement.substring(findWord(statement, "you ")+4, findWord(statement, "me")-1)+" you?";
+        return "What makes you think that I " +statement.substring(findWord(statement, "you")+4, findWord(statement, "me")-1)+" you?";
+
+    }
+    public String transformWouldYouRather(String statement)
+    {
+        double ran = (Math.random()*2)+1;
+        if (ran == 1)
+            return "i would prefer " +statement.substring(findWord(statement, "rather")+7, findWord(statement, "or")-1)+" .";
+        else
+            return "i would prefer " +statement.substring(findWord(statement, "or")+7)+" .";
 
     }
 }
